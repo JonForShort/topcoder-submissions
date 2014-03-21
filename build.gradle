@@ -42,13 +42,3 @@ task clean << {
 task build << {
     executeTaskForEach(name)
 }
-
-task stage << {
-    assert project.properties.containsKey(PROPERTY_STAGE_DIR):
-            "Must provide \"stage_dir\" property to indicate output"
-    executeTaskForEach(name)
-}
-
-task install << {
-    executeTaskForEach(name)
-}
