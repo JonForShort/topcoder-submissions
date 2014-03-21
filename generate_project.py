@@ -47,8 +47,7 @@ if __name__ == '__main__':
     for root, dirs, files in os.walk(pathToNewProject):
         for f in files:
             pathToFile = os.path.join(root, f)
-            print "using as path to file = " + pathToFile
-            contents = ""
+
             with open(pathToFile, "r") as fin:
                 contents = fin.read()
 
