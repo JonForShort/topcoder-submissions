@@ -6,9 +6,11 @@ def getProjects() {
     def projects = []
     def pathToSearchForProjects = rootDir.absolutePath
     new File(pathToSearchForProjects).eachDir() { dir ->
-        def pathToPossibleProject = dir.absolutePath + "/${BUILD_FILENAME}"
-        if (new File(pathToPossibleProject).exists()) {
-            projects.add(dir.name)
+        if (!dir.name.equals("Reference")) {
+            def pathToPossibleProject = dir.absolutePath + "/${BUILD_FILENAME}"
+            if (new File(pathToPossibleProject).exists()) {
+                projects.add(dir.name)
+            }
         }
     }
     return projects

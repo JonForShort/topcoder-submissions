@@ -43,3 +43,17 @@ if __name__ == '__main__':
                 newFileName = f.replace("Reference", args.project_name)
                 pathToRenamedFile = os.path.join(root, newFileName)
                 os.rename(pathToFile, pathToRenamedFile)
+
+    for root, dirs, files in os.walk(pathToNewProject):
+        for f in files:
+            pathToFile = os.path.join(root, f)
+            print "using as path to file = " + pathToFile
+            contents = ""
+            with open(pathToFile, "r") as fin:
+                contents = fin.read()
+
+            contents = contents.replace("${Name}", args.project_name)
+            contents = contents.replace("${name}", args.project_name.lower())            
+
+            with open(pathToFile, "w") as fout:
+                fout.write(contents)
