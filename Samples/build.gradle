@@ -1,0 +1,46 @@
+ext {
+    BUILD_FILENAME = "build.gradle"
+}
+
+def getProjects() {
+    def projects = []
+    def pathToSearchForProjects = rootDir.absolutePath
+    new File(pathToSearchForProjects).eachDir() { dir ->
+        if (!dir.name.equals("Reference")) {
+            def pathToPossibleProject = dir.absolutePath + "/${BUILD_FILENAME}"
+            if (new File(pathToPossibleProject).exists()) {
+                projects.add(dir.name)
+            }
+        }
+    }
+    return projects
+}
+
+def executeTaskForEach(taskName) {
+    projects.each { projectName ->
+        println "[**** Executing task [${taskName}] for project [${projectName}] **** ]"
+        def pathToBuildFile = rootDir.absolutePath + "/${projectName}/${BUILD_FILENAME}"
+        if (new File(pathToBuildFile).exists()) {
+            def currentTaskName = projectName + "_" + taskName
+            def currentTask = tasks.create(name: currentTaskName, type: GradleBuild)
+            currentTask.with {
+                buildFile = pathToBuildFile
+                tasks = [taskName]
+                startParameter.projectProperties =
+                        startParameter.projectProperties +
+                                gradle.startParameter.projectProperties
+            }
+            currentTask.execute()
+        } else {
+            println "Skipping task[${taskName}] for project [${projectName}]"
+        }
+    }
+}
+
+task clean << {
+    executeTaskForEach(name)
+}
+
+task build << {
+    executeTaskForEach(name)
+}
