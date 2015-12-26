@@ -44,3 +44,7 @@ task clean << {
 task build << {
     executeTaskForEach(name)
 }
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.9'
+}
