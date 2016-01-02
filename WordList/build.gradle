@@ -7,5 +7,3 @@ repositories {
 dependencies {
     testCompile "junit:junit:4.6"
 }
-
-sourceCompatibility = '1.7'
