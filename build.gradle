@@ -49,6 +49,10 @@ task assemble << {
     executeTaskForEach(name)
 }
 
+task check << {
+    executeTaskForEach(name)
+}
+
 task wrapper(type: Wrapper) {
     gradleVersion = '2.9'
 }
